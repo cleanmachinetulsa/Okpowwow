@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2027 Oklahoma Native American Cultural & Powwow Guide</title>
+  <meta name="description" content="A mobile-friendly 2027 guide to 13 Native American powwows, cultural festivals, visual calendar, corridor day trips, and first-timer etiquette from Tulsa, OK." />
+  <meta property="og:title" content="2027 Oklahoma Native American Powwow & Cultural Guide" />
+  <meta property="og:description" content="Interactive visual calendar, 13 Indoor & Outdoor events from Tulsa, corridor day trips, first-timer etiquette, and one-tap calendar builder." />
+  <meta property="og:type" content="website" />
+  <style>
+    :root {
+      --bg: #f8f7f4;
+      --surface: #ffffff;
+      --surface-alt: #f1efe9;
+      --text: #1c1917;
+      --text-muted: #57534e;
+      --primary: #9a3412;
+      --primary-dark: #7c2d12;
+      --primary-light: #ffedd5;
+      --indoor-bg: #dbeafe;
+      --indoor-text: #1e40af;
+      --outdoor-bg: #dcfce7;
+      --outdoor-text: #166534;
+      --mecca-bg: #fef3c7;
+      --mecca-text: #92400e;
+      --border: #e7e5e4;
+      --shadow: 0 2px 8px rgba(28, 25, 23, 0.06);
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 92px;
+    }
+
+    /* Hero Header */
+    header {
+      background: linear-gradient(135deg, #7c2d12 0%, #9a3412 55%, #b45309 100%);
+      color: #ffffff;
+      padding: 24px 16px 20px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    header p {
+      font-size: 0.9rem;
+      opacity: 0.92;
+      max-width: 640px;
+      margin: 0 auto 14px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s ease, background 0.15s ease;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-white { background: #ffffff; color: var(--primary-dark); }
+    .btn-white:hover { background: #fff7ed; }
+    .btn-outline-white {
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+    }
+    .btn-outline-white:hover { background: rgba(255, 255, 255, 0.24); }
+    .btn-primary { background: var(--primary); color: #ffffff; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-sm { padding: 6px 10px; font-size: 0.78rem; border-radius: 6px; }
+    .btn-ghost {
+      background: var(--surface-alt);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { background: #e7e5e4; }
+
+    /* Sticky Top Navigation Tabs */
+    .nav-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+    .tabs {
+      display: flex;
+      max-width: 820px;
+      margin: 0 auto;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex: 1;
+      min-width: 105px;
+      padding: 13px 8px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      background: #fffaf5;
+    }
+
+    /* Main Container */
+    main {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Filter Pills */
+    .filter-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      scrollbar-width: none;
+    }
+    .filter-bar::-webkit-scrollbar { display: none; }
+    .pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .pill.active {
+      background: var(--text);
+      color: #ffffff;
+      border-color: var(--text);
+    }
+
+    /* Season Accordions */
+    .season-group {
+      margin-bottom: 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .season-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: var(--surface-alt);
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .season-header .meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .count-badge {
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+    .chevron {
+      font-size: 0.9rem;
+      transition: transform 0.2s ease;
+    }
+    .season-group.collapsed .chevron { transform: rotate(-90deg); }
+    .season-group.collapsed .season-body { display: none; }
+    .season-body { padding: 10px; display: flex; flex-direction: column; gap: 10px; }
+
+    /* Compact Event Cards */
+    .event-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #ffffff;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .event-card.selected {
+      border-color: var(--primary);
+      background: #fffaf5;
+    }
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .pick-checkbox {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .card-main { flex: 1; min-width: 0; }
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .badge-indoor { background: var(--indoor-bg); color: var(--indoor-text); }
+    .badge-outdoor { background: var(--outdoor-bg); color: var(--outdoor-text); }
+    .badge-mecca { background: var(--mecca-bg); color: var(--mecca-text); }
+    .date-tag { font-size: 0.78rem; font-weight: 700; color: var(--primary); }
+    .drive-tag { font-size: 0.76rem; color: var(--text-muted); }
+
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .card-loc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .drawer-toggle {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 9px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Expandable Details Drawer */
+    .card-drawer {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+      font-size: 0.86rem;
+    }
+    .event-card.open .card-drawer { display: block; }
+    .drawer-desc { color: var(--text); margin-bottom: 8px; }
+    .daytrip-box {
+      background: #fff7ed;
+      border-left: 3px solid var(--primary);
+      padding: 8px 10px;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 10px;
+      font-size: 0.83rem;
+    }
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* Visual Calendar View */
+    .cal-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+      background: var(--surface);
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    .cal-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .legend-item { display: flex; align-items: center; gap: 5px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .dot-indoor { background: #2563eb; }
+    .dot-outdoor { background: #16a34a; }
+    .dot-mecca { background: #d97706; }
+
+    .cal-grid-wrap {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+      gap: 14px;
+    }
+    .month-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+    .month-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+    .day-cell {
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      border-radius: 6px;
+      position: relative;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .day-cell.empty { background: transparent; }
+    .day-cell.has-event {
+      font-weight: 800;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+    .day-cell.ev-indoor { background: var(--indoor-bg); color: var(--indoor-text); border-color: #93c5fd; }
+    .day-cell.ev-outdoor { background: var(--outdoor-bg); color: var(--outdoor-text); border-color: #86efac; }
+    .day-cell.ev-mecca { background: var(--mecca-bg); color: var(--mecca-text); border-color: #fcd34d; }
+    .day-cell.ev-multi {
+      background: linear-gradient(135deg, var(--outdoor-bg) 50%, var(--indoor-bg) 50%);
+      color: var(--text);
+      border-color: #94a3b8;
+    }
+    .day-cell.selected-day {
+      outline: 2px solid var(--primary);
+      outline-offset: -2px;
+    }
+    .month-events-list {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .mini-ev {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 0.78rem;
+      padding: 5px 7px;
+      border-radius: 6px;
+      background: var(--surface-alt);
+      cursor: pointer;
+    }
+    .mini-ev:hover { background: #e7e5e4; }
+
+    /* Calendar Spotlight Detail Box */
+    .cal-spotlight {
+      background: var(--surface);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .cal-spotlight.active { display: block; }
+
+    /* Day Trips & Etiquette Sections */
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+    }
+    .info-card h3 {
+      font-size: 1.02rem;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+    }
+    .info-card p { font-size: 0.88rem; color: var(--text); margin-bottom: 8px; }
+    .info-list { padding-left: 18px; font-size: 0.88rem; }
+    .info-list li { margin-bottom: 8px; }
+
+    /* Interactive Packing Checklist */
+    .pack-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .pack-item:last-child { border-bottom: none; }
+    .pack-item input { width: 18px; height: 18px; accent-color: var(--primary); }
+    .pack-item.done span { text-decoration: line-through; color: var(--text-muted); }
+
+    /* Sticky Bottom Action Bar */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #1c1917;
+      color: #ffffff;
+      padding: 10px 16px;
+      z-index: 60;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .bottom-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .bottom-status { font-size: 0.84rem; font-weight: 600; }
+    .bottom-status span { color: #fdba74; font-weight: 800; }
+    .bottom-btns { display: flex; gap: 8px; }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 72px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #292524;
+      color: #ffffff;
+      padding: 9px 16px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 80;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media print {
+      .nav-wrapper, .filter-bar, .bottom-bar, .hero-actions, .drawer-toggle, .card-actions, .cal-controls { display: none !important; }
+      body { padding-bottom: 0; background: #fff; }
+      .tab-panel { display: block !important; margin-bottom: 24px; }
+      .season-group.collapsed .season-body, .event-card .card-drawer { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>2027 Oklahoma Native American Cultural Guide</h1>
+  <p>13 Indoor & Outdoor Powwows, Art Markets & Corridor Day Trips from Tulsa</p>
+  <div class="hero-actions">
+    <button class="btn btn-white" onclick="downloadICS(eventsData, '2027_Oklahoma_Native_Events_All13.ics')">
+      📅 Add All 13 Events (.ics)
+    </button>
+    <button class="btn btn-outline-white" onclick="shareLink(false)">
+      🔗 Share Guide
+    </button>
+  </div>
+</header>
+
+<nav class="nav-wrapper" aria-label="Guide Sections">
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="events" onclick="switchTab('events')">📋 Events (13)</button>
+    <button class="tab-btn" data-tab="calendar" onclick="switchTab('calendar')">🗓️ Visual Calendar</button>
+    <button class="tab-btn" data-tab="daytrips" onclick="switchTab('daytrips')">🗺️ Day Trips</button>
+    <button class="tab-btn" data-tab="etiquette" onclick="switchTab('etiquette')">🎒 Etiquette & Prep</button>
+  </div>
+</nav>
+
+<main>
+  <!-- TAB 1: CATEGORIZED EVENTS LIST -->
+  <section id="tab-events" class="tab-panel active">
+    <div class="filter-bar">
+      <button class="pill active" onclick="setFilter('all', this)">All 13</button>
+      <button class="pill" onclick="setFilter('indoor', this)">❄️ Indoor Only (5)</button>
+      <button class="pill" onclick="setFilter('outdoor', this)">☀️ Outdoor (8)</button>
+      <button class="pill" onclick="setFilter('close', this)">🚗 Under 1.5 Hrs</button>
+      <button class="pill" onclick="setFilter('selected', this)">✅ My Picks</button>
+    </div>
+
+    <div class="season-group" id="group-winter">
+      <button class="season-header" onclick="toggleSeason('group-winter')">
+        <span>❄️ Winter & Spring Indoor Kickoff (Dec – Apr)</span>
+        <span class="meta"><span class="count-badge" id="count-winter">3</span><span class="chevron">▼</span></span>
+      </button>
+      <div class="season-body" id="list-winter"></div>
+    </div>
+
+    <div class="season-group" id="group-summer">
+      <button class="season-header" onclick="toggleSeason('group-summer')">
+        <span>☀️ Summer & Fall Festivals & Encampments (Jun – Sep)</span>
+        <span class="meta"><span class="count-badge" id="count-summer">10</span><span class="chevron">▼</span></span>
+      </button>
+      <div class="season-body" id="list-summer"></div>
+    </div>
+  </section>
+
+  <!-- TAB 2: VISUAL MONTH-BY-MONTH CALENDAR -->
+  <section id="tab-calendar" class="tab-panel">
+    <div class="cal-controls">
+      <div class="cal-legend">
+        <span class="legend-item"><span class="dot dot-indoor"></span> Indoor Event</span>
+        <span class="legend-item"><span class="dot dot-outdoor"></span> Outdoor Event</span>
+        <span class="legend-item"><span class="dot dot-mecca"></span> Mecca Pilgrimage</span>
+      </div>
+      <span style="font-size:0.78rem; color:var(--text-muted);">Tap any highlighted date or event below to inspect & check</span>
+    </div>
+
+    <div id="cal-spotlight" class="cal-spotlight"></div>
+    <div class="cal-grid-wrap" id="calendar-grid"></div>
+  </section>
+
+  <!-- TAB 3: CORRIDOR DAY TRIPS -->
+  <section id="tab-daytrips" class="tab-panel">
+    <div class="info-card">
+      <h3>⏱️ The "Morning Museum, Evening Arena" Strategy</h3>
+      <p>Powwow schedules follow a steady rhythm: <strong>2:00 PM Gourd Dancing</strong>, a <strong>5:00 PM Supper Break</strong>, and the <strong>7:00 PM Grand Entry</strong>. Leave Tulsa around 9:30 AM, explore a tribal museum or historic capitol in the morning, eat Indigenous cuisine for lunch, and arrive at the arena around 4:30 PM.</p>
+    </div>
+
+    <div class="info-card">
+      <h3>🛣️ Corridor 1: The I-44 Southwest Route (OKC & Norman)</h3>
+      <p><strong>Pairs with:</strong> OU Spring Powwow (Apr) & Red Earth Festival (Jul 31–Aug 1)</p>
+      <ul class="info-list">
+        <li><strong>First Americans Museum (OKC):</strong> World-class storytelling covering all 39 federally recognized tribal nations in Oklahoma.</li>
+        <li><strong>Thirty Nine Restaurant (OKC):</strong> Located inside FAM—order the bison burger, three sisters salad, or blue corn dishes before heading downtown or to Norman.</li>
+        <li><strong>Sam Noble Museum (Norman):</strong> Steps away from the Lloyd Noble Center for OU Spring Powwow; features deep Native American archaeological and cultural galleries.</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h3>🌾 Corridor 2: Northern Prairie Triangle (Pawnee, Red Rock & Ponca City)</h3>
+      <p><strong>Pairs with:</strong> Pawnee Homecoming (Jul), Otoe-Missouria Encampment (Jul) & Standing Bear Powwow (Sep)</p>
+      <ul class="info-list">
+        <li><strong>Pawnee Bill Ranch & Museum (Pawnee):</strong> Historic hilltop mansion and bison pasture overlooking the Pawnee Nation homelands.</li>
+        <li><strong>Standing Bear Native American Park (Ponca City):</strong> Features a 22-foot bronze statue of Chief Standing Bear and walking trails honoring six area tribes.</li>
+        <li><strong>Marland Mansion (Ponca City):</strong> Easy midday architectural stop 10 minutes from the Standing Bear grounds.</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h3>🌲 Corridor 3: Eastern Hills & Cherokee/Muscogee Heritage</h3>
+      <p><strong>Pairs with:</strong> Muscogee Nation Festival (Jun), Cherokee National Holiday (Sep) & Choctaw Festival (Sep)</p>
+      <ul class="info-list">
+        <li><strong>Okmulgee (45 mins south):</strong> Pair Muscogee Nation Festival stickball games with the historic Creek Council House Museum and Mvskoke grape dumplings.</li>
+        <li><strong>Tahlequah (1 hr 15 mins east):</strong> Walk the Cherokee National History Museum on the town square and tour the Cherokee Female Seminary grounds.</li>
+        <li><strong>Tuskahoma (2 hrs 30 mins south):</strong> Turn Choctaw Labor Day Festival into a scenic Kiamichi Mountains drive via Robbers Cave State Park.</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h3>🏙️ Corridor 4: Zero-Commute Tulsa Stops</h3>
+      <p><strong>Pairs with:</strong> Sobriety Powwow (Dec 31), Powwow of Champions (Feb/Mar) & Tulsa Powwow (Late Jul)</p>
+      <ul class="info-list">
+        <li><strong>Southwest Trading Company (11th St / Route 66):</strong> Browse authentic Native turquoise jewelry, Pendleton blankets, and local Indigenous art before heading to the Mabee Center or Arvest Convention Center.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TAB 4: ETIQUETTE & INTERACTIVE PACKING LIST -->
+  <section id="tab-etiquette" class="tab-panel">
+    <div class="info-card">
+      <h3>🪶 First-Timer Powwow Etiquette</h3>
+      <ul class="info-list">
+        <li><strong>Listen to the MC:</strong> The Master of Ceremonies explains every dance, song, and rule over the loudspeaker—just follow their lead.</li>
+        <li><strong>Stand & Remove Hats:</strong> Always stand and take off caps/hats during the <strong>Grand Entry</strong>, <strong>Flag Songs</strong>, <strong>Veterans Songs</strong>, and invocations.</li>
+        <li><strong>Ask Before Photos:</strong> Never photograph prayers, flag songs, or individual dancers without asking permission first.</li>
+        <li><strong>Respect Regalia & Arena Floor:</strong> Never walk across the center dance circle, and never touch feathers or beadwork without asking—regalia items are often sacred family heirlooms.</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h3>🎒 Interactive Trunk Packing Checklist</h3>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">Tap items as you load your car (saved automatically in your browser):</p>
+      <div id="packing-list"></div>
+    </div>
+  </section>
+</main>
+
+<!-- Sticky Bottom Calendar Builder Bar -->
+<div class="bottom-bar">
+  <div class="bottom-inner">
+    <div class="bottom-status"><span id="selected-count">0</span> events checked</div>
+    <div class="bottom-btns">
+      <button class="btn btn-outline-white btn-sm" onclick="shareLink(true)">📤 Share Picks</button>
+      <button class="btn btn-primary btn-sm" onclick="downloadSelected()">⬇️ Download .ics</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast">Link copied to clipboard!</div>
+
+<script>
+const eventsData = [
+  {
+    id: "sobriety",
+    season: "winter",
+    title: "Tulsa Sobriety Powwow",
+    datesText: "Dec 31, 2026 (New Year's Eve)",
+    monthIndex: 0, // Dec 2026 shown first
+    year: 2026,
+    month: 12,
+    days: [31],
+    startDate: "20261231",
+    endDate: "20270101",
+    type: "indoor",
+    drive: "Local (Tulsa)",
+    close: true,
+    venue: "Tulsa Expo Square / Tulsa Area Venue, Tulsa, OK",
+    desc: "Alcohol- and drug-free community gathering welcoming the new year with Southern & Northern drum groups, intertribal dancing, and a midnight countdown.",
+    dayTrip: "Stop by Southwest Trading Company on Route 66 in the afternoon before heading to the evening session.",
+    verifyUrl: "https://www.google.com/search?q=Tulsa+Sobriety+Powwow+New+Years+Eve"
+  },
+  {
+    id: "champions",
+    season: "winter",
+    title: "Powwow of Champions",
+    datesText: "Feb 26–28, 2027 (Est.)",
+    monthIndex: 1,
+    year: 2027,
+    month: 2,
+    days: [26, 27, 28],
+    startDate: "20270226",
+    endDate: "20270301",
+    type: "indoor",
+    drive: "Local (South Tulsa)",
+    close: true,
+    venue: "ORU Mabee Center, 7777 S Lewis Ave, Tulsa, OK 74171",
+    desc: "Massive indoor contest powwow hosted by the Intertribal Indian Club of Tulsa featuring 300+ elite dancers, full Grand Entries, and Native art vendors.",
+    dayTrip: "Warm, stadium-seated indoor venue—great first powwow experience right in South Tulsa.",
+    verifyUrl: "https://mabeecenter.com/"
+  },
+  {
+    id: "ou-spring",
+    season: "winter",
+    title: "113th Annual OU Spring Powwow",
+    datesText: "Apr 17, 2027 (Est.)",
+    monthIndex: 2,
+    year: 2027,
+    month: 4,
+    days: [17],
+    startDate: "20270417",
+    endDate: "20270418",
+    type: "indoor",
+    drive: "1 hr 50 mins",
+    close: false,
+    venue: "Lloyd Noble Center, 2900 S Jenkins Ave, Norman, OK 73019",
+    desc: "One of the oldest student-led powwows in the US (12:00 PM – 11:00 PM). Free admission, vibrant intertribal dancing, and college cultural pride.",
+    dayTrip: "Morning at First Americans Museum + lunch at Thirty Nine Restaurant in OKC, then 20 mins south to Norman for evening dances.",
+    verifyUrl: "https://www.google.com/search?q=OU+Spring+Powwow+Lloyd+Noble+Center+Norman"
+  },
+  {
+    id: "muscogee",
+    season: "summer",
+    title: "Muscogee (Creek) Nation Festival",
+    datesText: "Jun 24–27, 2027 (Est.)",
+    monthIndex: 3,
+    year: 2027,
+    month: 6,
+    days: [24, 25, 26, 27],
+    startDate: "20270624",
+    endDate: "20270628",
+    type: "outdoor",
+    drive: "45 mins",
+    close: true,
+    venue: "Claude Cox Omniplex, 2951 N Wood Dr, Okmulgee, OK 74447",
+    desc: "Four-day tribal celebration with free admission, traditional stickball exhibitions, cultural demos, Mvskoke food, and an arts & crafts market.",
+    dayTrip: "Tour the historic Creek Council House Museum in downtown Okmulgee and try traditional Mvskoke grape dumplings.",
+    verifyUrl: "https://creekfestival.com/"
+  },
+  {
+    id: "pawnee",
+    season: "summer",
+    title: "Pawnee Indian Veterans Homecoming",
+    datesText: "Jul 1–4, 2027 (Est.)",
+    monthIndex: 4,
+    year: 2027,
+    month: 7,
+    days: [1, 2, 3, 4],
+    startDate: "20270701",
+    endDate: "20270705",
+    type: "outdoor",
+    drive: "1 hr 5 mins",
+    close: true,
+    venue: "Moses Yellowhorse Memorial Field, Pawnee, OK 74058",
+    desc: "Authentic outdoor encampment powwow honoring Pawnee veterans over Fourth of July weekend, renowned for traditional Gourd Dancing.",
+    dayTrip: "Visit Pawnee Bill Ranch & Museum in the morning, bring folding chairs for afternoon gourd dancing.",
+    verifyUrl: "https://pawneenation.org/pawnee-homecoming-2/"
+  },
+  {
+    id: "quapaw",
+    season: "summer",
+    title: "Quapaw Nation Annual Powwow",
+    datesText: "Jul 2–5, 2027 (Est.)",
+    monthIndex: 4,
+    year: 2027,
+    month: 7,
+    days: [2, 3, 4, 5],
+    startDate: "20270702",
+    endDate: "20270706",
+    type: "outdoor",
+    drive: "1 hr 30 mins",
+    close: true,
+    venue: "Beaver Springs Park, 5681 S 630 Rd, Quapaw, OK 74363",
+    desc: "Historic four-day gathering in a shaded park featuring family camps, gourd clans, contest dancing, and late-night stomp dances.",
+    dayTrip: "Split Independence Day weekend between Pawnee (Thu/Fri) and Quapaw (Sat night).",
+    verifyUrl: "https://www.quapawtribe.com/88/Annual-Quapaw-Powwow"
+  },
+  {
+    id: "otoe",
+    season: "summer",
+    title: "Otoe-Missouria Summer Encampment",
+    datesText: "Jul 15–18, 2027 (Est.)",
+    monthIndex: 4,
+    year: 2027,
+    month: 7,
+    days: [15, 16, 17, 18],
+    startDate: "20270715",
+    endDate: "20270719",
+    type: "outdoor",
+    drive: "1 hr 25 mins",
+    close: true,
+    venue: "Otoe-Missouria Tribal Complex, 8151 Hwy 177, Red Rock, OK 74651",
+    desc: "Traditional family encampment featuring afternoon gourd dancing, handgames, and evening Grand Entries at 7:00 PM.",
+    dayTrip: "Stop at Marland Mansion or Standing Bear Park in nearby Ponca City before evening dances.",
+    verifyUrl: "https://www.omtribe.org/who-we-are/culture/encampment/"
+  },
+  {
+    id: "tulsa-powwow",
+    season: "summer",
+    title: "75th Annual Tulsa Powwow",
+    datesText: "Jul 24–25, 2027 (Est.)",
+    monthIndex: 4,
+    year: 2027,
+    month: 7,
+    days: [24, 25],
+    startDate: "20270724",
+    endDate: "20270726",
+    type: "indoor",
+    drive: "Local (Downtown Tulsa)",
+    close: true,
+    venue: "Arvest Convention Center, 100 Civic Center, Tulsa, OK 74103",
+    desc: "One of America's longest-running urban powwows (~$7–$10 entry). Air-conditioned arena with top Northern & Southern drum groups.",
+    dayTrip: "Easy downtown Tulsa afternoon—pair with lunch in the Arts District.",
+    verifyUrl: "https://tulsaindianclub.org/tulsa-powwow"
+  },
+  {
+    id: "red-earth",
+    season: "summer",
+    title: "Red Earth Festival",
+    datesText: "Jul 31–Aug 1, 2027",
+    monthIndex: 4,
+    year: 2027,
+    month: 7,
+    days: [31],
+    extraAugDays: [1],
+    startDate: "20270731",
+    endDate: "20270802",
+    type: "indoor",
+    drive: "1 hr 40 mins",
+    close: false,
+    venue: "Oklahoma City Convention Center, 100 Mick Cornett Dr, OKC, OK 73109",
+    desc: "Premier Indigenous fine art market (130+ master jewelers, painters & sculptors) paired with elite bracket dance competitions.",
+    dayTrip: "Combine with First Americans Museum (5 mins away) and dinner at Thirty Nine Restaurant.",
+    verifyUrl: "https://redearth.org/pages/red-earth-festival"
+  },
+  {
+    id: "santa-fe",
+    season: "summer",
+    title: "SWAIA Santa Fe Indian Market (Mecca)",
+    datesText: "Aug 21–22, 2027",
+    monthIndex: 5,
+    year: 2027,
+    month: 8,
+    days: [21, 22],
+    startDate: "20270821",
+    endDate: "20270823",
+    type: "mecca",
+    drive: "~9 hrs (Santa Fe, NM)",
+    close: false,
+    venue: "Santa Fe Plaza, 100 Old Santa Fe Trail, Santa Fe, NM 87501",
+    desc: "The world's largest and most prestigious Indigenous art and fashion event—1,000+ artists from 200+ tribal nations fill historic Santa Fe Plaza.",
+    dayTrip: "Bucket-list road trip west on I-40; book lodging 6+ months in advance.",
+    verifyUrl: "https://www.swaia.org/santa-fe-indian-market"
+  },
+  {
+    id: "cherokee",
+    season: "summer",
+    title: "Cherokee National Holiday",
+    datesText: "Sep 3–5, 2027 (Labor Day)",
+    monthIndex: 6,
+    year: 2027,
+    month: 9,
+    days: [3, 4, 5],
+    startDate: "20270903",
+    endDate: "20270906",
+    type: "outdoor",
+    drive: "1 hr 15 mins",
+    close: true,
+    venue: "Cherokee Nation Tribal Complex & Downtown Tahlequah, OK 74464",
+    desc: "100,000+ visitor heritage celebration commemorating the 1839 Cherokee Constitution with parade, blowgun/cornstalk games, art show, and powwow.",
+    dayTrip: "Walk the Cherokee National History Museum on the town square and tour the Cherokee Female Seminary.",
+    verifyUrl: "https://thecherokeeholiday.com/"
+  },
+  {
+    id: "choctaw",
+    season: "summer",
+    title: "Choctaw Nation Labor Day Festival",
+    datesText: "Sep 3–5, 2027 (Labor Day)",
+    monthIndex: 6,
+    year: 2027,
+    month: 9,
+    days: [3, 4, 5],
+    startDate: "20270903",
+    endDate: "20270906",
+    type: "outdoor",
+    drive: "2 hrs 30 mins",
+    close: false,
+    venue: "Choctaw Capitol Grounds, 52048 Choctaw Rd, Tuskahoma, OK 74574",
+    desc: "Scenic mountain gathering at the historic Choctaw Capitol featuring traditional stickball tournaments, gourd dancing, quilt shows, and free concerts.",
+    dayTrip: "Scenic Kiamichi Mountains drive—pair with a stop at Robbers Cave State Park.",
+    verifyUrl: "https://laborday.choctawnation.com/"
+  },
+  {
+    id: "standing-bear",
+    season: "summer",
+    title: "Standing Bear Powwow",
+    datesText: "Sep 24–25, 2027 (Est.)",
+    monthIndex: 6,
+    year: 2027,
+    month: 9,
+    days: [24, 25],
+    startDate: "20270924",
+    endDate: "20270926",
+    type: "outdoor",
+    drive: "1 hr 40 mins",
+    close: false,
+    venue: "Standing Bear Native American Park, 601 Standing Bear Pkwy, Ponca City, OK 74601",
+    desc: "Free six-tribe intertribal gathering (Kaw, Osage, Otoe-Missouria, Pawnee, Ponca & Tonkawa) featuring a complimentary Saturday evening corn soup & fry bread meal.",
+    dayTrip: "Explore the park trails and Chief Standing Bear statue before the Saturday evening communal supper.",
+    verifyUrl: "https://www.standingbearpark.com/"
+  }
+];
+
+const packingItems = [
+  "2 Folding Lawn / Camp Chairs (essential for outdoor arenas)",
+  "$40–$100 Cash in Small Bills (Indian tacos, fry bread & blanket dances)",
+  "Small Cooler with Bottled Water & Electrolyte Drinks",
+  "Bug Spray, Sunscreen & Portable Hand Fan",
+  "Light Jacket or Hoodie (for late-night outdoor sessions)",
+  "Fully Charged Phone + Portable Power Bank"
+];
+
+let selectedIds = new Set(JSON.parse(localStorage.getItem("ok_native_picks") || "[]"));
+let packedState = JSON.parse(localStorage.getItem("ok_native_packed") || "{}");
+let currentFilter = "all";
+
+// Parse ?picks= URL parameter on load
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.has("picks")) {
+  const incoming = urlParams.get("picks").split(",").filter(Boolean);
+  if (incoming.length) {
+    selectedIds = new Set(incoming);
+    localStorage.setItem("ok_native_picks", JSON.stringify([...selectedIds]));
+  }
+}
+
+function savePicks() {
+  localStorage.setItem("ok_native_picks", JSON.stringify([...selectedIds]));
+  document.getElementById("selected-count").textContent = selectedIds.size;
+}
+
+function togglePick(id, checkboxEl) {
+  if (selectedIds.has(id)) {
+    selectedIds.delete(id);
+  } else {
+    selectedIds.add(id);
+  }
+  savePicks();
+  renderEvents();
+  renderCalendar();
+}
+
+function toggleDrawer(id) {
+  const card = document.getElementById("card-" + id);
+  if (card) card.classList.toggle("open");
+}
+
+function toggleSeason(groupId) {
+  document.getElementById(groupId).classList.toggle("collapsed");
+}
+
+function switchTab(tabName) {
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === tabName));
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.toggle("active", p.id === "tab-" + tabName));
+}
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+  btn.classList.add("active");
+  renderEvents();
+}
+
+function matchesFilter(ev) {
+  if (currentFilter === "all") return true;
+  if (currentFilter === "indoor") return ev.type === "indoor";
+  if (currentFilter === "outdoor") return ev.type === "outdoor" || ev.type === "mecca";
+  if (currentFilter === "close") return ev.close;
+  if (currentFilter === "selected") return selectedIds.has(ev.id);
+  return true;
+}
+
+function buildGoogleCalUrl(ev) {
+  const text = encodeURIComponent((ev.type === "indoor" ? "[INDOOR] " : "") + ev.title);
+  const details = encodeURIComponent(ev.desc + "\n\nDay Trip Tip: " + ev.dayTrip);
+  const loc = encodeURIComponent(ev.venue);
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${ev.startDate}/${ev.endDate}&details=${details}&location=${loc}`;
+}
+
+function buildMapsUrl(ev) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.venue)}`;
+}
+
+function renderEvents() {
+  const winterList = document.getElementById("list-winter");
+  const summerList = document.getElementById("list-summer");
+  winterList.innerHTML = "";
+  summerList.innerHTML = "";
+
+  let wCount = 0;
+  let sCount = 0;
+
+  eventsData.forEach(ev => {
+    if (!matchesFilter(ev)) return;
+    const isChecked = selectedIds.has(ev.id);
+    const badgeClass = ev.type === "indoor" ? "badge-indoor" : (ev.type === "mecca" ? "badge-mecca" : "badge-outdoor");
+    const badgeLabel = ev.type === "indoor" ? "❄️ Indoor" : (ev.type === "mecca" ? "⭐ Mecca Trip" : "☀️ Outdoor");
+
+    const card = document.createElement("div");
+    card.className = "event-card" + (isChecked ? " selected" : "");
+    card.id = "card-" + ev.id;
+    card.innerHTML = `
+      <div class="card-top">
+        <input type="checkbox" class="pick-checkbox" ${isChecked ? "checked" : ""} onchange="togglePick('${ev.id}', this)" aria-label="Select ${ev.title}" />
+        <div class="card-main">
+          <div class="badges">
+            <span class="date-tag">${ev.datesText}</span>
+            <span class="badge ${badgeClass}">${badgeLabel}</span>
+            <span class="drive-tag">• ${ev.drive}</span>
+          </div>
+          <div class="card-title-row">
+            <div class="card-title">${ev.title}</div>
+            <button class="drawer-toggle" onclick="toggleDrawer('${ev.id}')">Details ▾</button>
+          </div>
+          <div class="card-loc">📍 ${ev.venue}</div>
+          <div class="card-drawer">
+            <p class="drawer-desc">${ev.desc}</p>
+            <div class="daytrip-box"><strong>🗺️ Day-Trip Pairing:</strong> ${ev.dayTrip}</div>
+            <div class="card-actions">
+              <a class="btn btn-primary btn-sm" href="${buildGoogleCalUrl(ev)}" target="_blank" rel="noopener">+ Google Cal</a>
+              <a class="btn btn-ghost btn-sm" href="${buildMapsUrl(ev)}" target="_blank" rel="noopener">🧭 Directions</a>
+              <a class="btn btn-ghost btn-sm" href="${ev.verifyUrl}" target="_blank" rel="noopener">🔍 Verify Dates</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (ev.season === "winter") {
+      winterList.appendChild(card);
+      wCount++;
+    } else {
+      summerList.appendChild(card);
+      sCount++;
+    }
+  });
+
+  document.getElementById("count-winter").textContent = wCount;
+  document.getElementById("count-summer").textContent = sCount;
+  if (wCount === 0) winterList.innerHTML = `<p style="font-size:0.84rem;color:var(--text-muted);padding:6px;">No winter/spring events match this filter.</p>`;
+  if (sCount === 0) summerList.innerHTML = `<p style="font-size:0.84rem;color:var(--text-muted);padding:6px;">No summer/fall events match this filter.</p>`;
+}
+
+/* Visual Month-by-Month Calendar Renderer */
+const calendarMonths = [
+  { year: 2026, month: 12, name: "December 2026" },
+  { year: 2027, month: 2, name: "February 2027" },
+  { year: 2027, month: 4, name: "April 2027" },
+  { year: 2027, month: 6, name: "June 2027" },
+  { year: 2027, month: 7, name: "July 2027" },
+  { year: 2027, month: 8, name: "August 2027" },
+  { year: 2027, month: 9, name: "September 2027" }
+];
+
+function getEventsForDate(year, month, day) {
+  return eventsData.filter(ev => {
+    if (ev.year === year && ev.month === month && ev.days.includes(day)) return true;
+    if (ev.year === year && month === 8 && ev.extraAugDays && ev.extraAugDays.includes(day)) return true;
+    return false;
+  });
+}
+
+function showCalendarSpotlight(evIds) {
+  const box = document.getElementById("cal-spotlight");
+  const matches = eventsData.filter(e => evIds.includes(e.id));
+  if (!matches.length) return;
+
+  box.innerHTML = matches.map(ev => {
+    const isChecked = selectedIds.has(ev.id);
+    const badgeClass = ev.type === "indoor" ? "badge-indoor" : (ev.type === "mecca" ? "badge-mecca" : "badge-outdoor");
+    const badgeLabel = ev.type === "indoor" ? "❄️ Indoor" : (ev.type === "mecca" ? "⭐ Mecca Trip" : "☀️ Outdoor");
+    return `
+      <div style="margin-bottom:${matches.length > 1 ? '12px' : '0'}; padding-bottom:${matches.length > 1 ? '10px' : '0'}; border-bottom:${matches.length > 1 ? '1px solid var(--border)' : 'none'};">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px;">
+          <div>
+            <span class="date-tag">${ev.datesText}</span>
+            <span class="badge ${badgeClass}">${badgeLabel}</span>
+            <span class="drive-tag">• ${ev.drive}</span>
+          </div>
+          <label style="display:flex;align-items:center;gap:5px;font-size:0.8rem;font-weight:700;cursor:pointer;">
+            <input type="checkbox" ${isChecked ? "checked" : ""} onchange="togglePick('${ev.id}', this); showCalendarSpotlight(['${ev.id}']);" style="accent-color:var(--primary);width:17px;height:17px;" />
+            Add to Picks
+          </label>
+        </div>
+        <div style="font-size:1.02rem;font-weight:800;margin-bottom:3px;">${ev.title}</div>
+        <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:6px;">📍 ${ev.venue}</div>
+        <p style="font-size:0.85rem;margin-bottom:6px;">${ev.desc}</p>
+        <div class="daytrip-box" style="margin-bottom:8px;"><strong>🗺️ Day Trip:</strong> ${ev.dayTrip}</div>
+        <div class="card-actions">
+          <a class="btn btn-primary btn-sm" href="${buildGoogleCalUrl(ev)}" target="_blank" rel="noopener">+ Google Cal</a>
+          <a class="btn btn-ghost btn-sm" href="${buildMapsUrl(ev)}" target="_blank" rel="noopener">🧭 Directions</a>
+        </div>
+      </div>
+    `;
+  }).join("");
+  box.classList.add("active");
+  box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function renderCalendar() {
+  const grid = document.getElementById("calendar-grid");
+  grid.innerHTML = "";
+
+  calendarMonths.forEach(m => {
+    const firstDay = new Date(m.year, m.month - 1, 1).getDay();
+    const totalDays = new Date(m.year, m.month, 0).getDate();
+
+    const monthEvs = eventsData.filter(ev =>
+      (ev.year === m.year && ev.month === m.month) ||
+      (ev.year === m.year && m.month === 8 && ev.extraAugDays)
+    );
+
+    let cellsHtml = "";
+    for (let i = 0; i < firstDay; i++) {
+      cellsHtml += `<div class="day-cell empty"></div>`;
+    }
+
+    for (let d = 1; d <= totalDays; d++) {
+      const dayEvs = getEventsForDate(m.year, m.month, d);
+      if (dayEvs.length === 0) {
+        cellsHtml += `<div class="day-cell">${d}</div>`;
+      } else {
+        const types = new Set(dayEvs.map(e => e.type));
+        let cls = "day-cell has-event ";
+        if (types.size > 1) cls += "ev-multi";
+        else if (types.has("indoor")) cls += "ev-indoor";
+        else if (types.has("mecca")) cls += "ev-mecca";
+        else cls += "ev-outdoor";
+
+        if (dayEvs.some(e => selectedIds.has(e.id))) cls += " selected-day";
+        const idsArg = JSON.stringify(dayEvs.map(e => e.id)).replace(/"/g, "&quot;");
+        cellsHtml += `<div class="${cls}" onclick="showCalendarSpotlight(${idsArg})" title="${dayEvs.map(e => e.title).join(' / ')}">${d}</div>`;
+      }
+    }
+
+    const miniListHtml = monthEvs.map(ev => {
+      const dotCls = ev.type === "indoor" ? "dot-indoor" : (ev.type === "mecca" ? "dot-mecca" : "dot-outdoor");
+      const checkMark = selectedIds.has(ev.id) ? "✅ " : "";
+      return `
+        <div class="mini-ev" onclick="showCalendarSpotlight(['${ev.id}'])">
+          <span><span class="dot ${dotCls}" style="margin-right:5px;"></span><strong>${checkMark}${ev.title}</strong></span>
+          <span style="color:var(--text-muted);white-space:nowrap;">${ev.datesText.split("(")[0].trim()}</span>
+        </div>
+      `;
+    }).join("");
+
+    const card = document.createElement("div");
+    card.className = "month-card";
+    card.innerHTML = `
+      <div class="month-title">
+        <span>${m.name}</span>
+        <span style="font-size:0.74rem;color:var(--text-muted);">${monthEvs.length} event${monthEvs.length > 1 ? "s" : ""}</span>
+      </div>
+      <div class="weekdays">
+        <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+      </div>
+      <div class="days-grid">${cellsHtml}</div>
+      <div class="month-events-list">${miniListHtml}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+/* Interactive Packing Checklist */
+function renderPacking() {
+  const container = document.getElementById("packing-list");
+  container.innerHTML = packingItems.map((item, idx) => {
+    const checked = !!packedState[idx];
+    return `
+      <label class="pack-item ${checked ? "done" : ""}">
+        <input type="checkbox" ${checked ? "checked" : ""} onchange="togglePack(${idx})" />
+        <span>${item}</span>
+      </label>
+    `;
+  }).join("");
+}
+
+function togglePack(idx) {
+  packedState[idx] = !packedState[idx];
+  localStorage.setItem("ok_native_packed", JSON.stringify(packedState));
+  renderPacking();
+}
+
+/* .ICS File Generator (9:00 AM Morning Reminder) */
+function downloadICS(list, filename) {
+  if (!list.length) {
+    showToast("Check at least 1 event first!");
+    return;
+  }
+  const lines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Tulsa Native Cultural Guide//2027//EN",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH"
+  ];
+
+  list.forEach(ev => {
+    const prefix = ev.type === "indoor" ? "[INDOOR] " : "";
+    const summary = (prefix + ev.title).replace(/,/g, "\\,");
+    const location = ev.venue.replace(/,/g, "\\,");
+    const description = (ev.desc + "\\n\\nDay Trip Tip: " + ev.dayTrip + "\\nVerify Dates: " + ev.verifyUrl).replace(/,/g, "\\,");
+
+    lines.push(
+      "BEGIN:VEVENT",
+      `UID:${ev.id}-2027@oknativeguide.local`,
+      `DTSTAMP:20261114T120000Z`,
+      `DTSTART;VALUE=DATE:${ev.startDate}`,
+      `DTEND;VALUE=DATE:${ev.endDate}`,
+      `SUMMARY:${summary}`,
+      `LOCATION:${location}`,
+      `DESCRIPTION:${description}`,
+      "BEGIN:VALARM",
+      "TRIGGER;VALUE=DURATION:PT9H",
+      "ACTION:DISPLAY",
+      `DESCRIPTION:Today: ${summary}`,
+      "END:VALARM",
+      "END:VEVENT"
+    );
+  });
+
+  lines.push("END:VCALENDAR");
+  const blob = new Blob([lines.join("\r\n")], { type: "text/calendar;charset=utf-8" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  showToast(`Downloaded ${list.length} event${list.length > 1 ? "s" : ""} (.ics)!`);
+}
+
+function downloadSelected() {
+  const chosen = eventsData.filter(e => selectedIds.has(e.id));
+  downloadICS(chosen, "My_2027_Oklahoma_Native_Picks.ics");
+}
+
+/* Native Share / Copy URL */
+function shareLink(withPicks) {
+  const base = window.location.href.split("?")[0];
+  let shareUrl = base;
+  let title = "2027 Oklahoma Native American Cultural & Powwow Guide";
+
+  if (withPicks) {
+    if (selectedIds.size === 0) {
+      showToast("Check at least 1 event to share your picks!");
+      return;
+    }
+    shareUrl = `${base}?picks=${[...selectedIds].join(",")}`;
+    title = `My ${selectedIds.size} Oklahoma Powwow Picks (2027)`;
+  }
+
+  if (navigator.share) {
+    navigator.share({ title, url: shareUrl }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      showToast(withPicks ? "Custom Picks URL copied!" : "Guide link copied!");
+    });
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2600);
+}
+
+// Initial Render
+savePicks();
+renderEvents();
+renderCalendar();
+renderPacking();
+</script>
+</body>
+</html>
