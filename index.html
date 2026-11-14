@@ -1,6 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <style>
+  .interest-row {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border);
+  }
+  .btn-interest {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 6px 12px; border-radius: 999px; font-family: inherit;
+    font-size: 0.78rem; font-weight: 700; cursor: pointer;
+    background: var(--surface-alt); color: var(--text);
+    border: 1px solid var(--border); transition: all 0.2s ease;
+  }
+  .btn-interest:hover { border-color: var(--primary); }
+  .btn-interest.joined {
+    background: var(--primary-light); color: var(--primary-dark);
+    border-color: var(--primary);
+  }
+  .interest-pills {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 5px;
+    font-size: 0.76rem; color: var(--text-muted);
+  }
+  .name-pill {
+    background: var(--surface-alt); color: var(--text);
+    padding: 2px 8px; border-radius: 999px; font-weight: 600;
+    border: 1px solid var(--border);
+  }
+  .heart-pill {
+    background: #fde8e8; color: #9b1c1c;
+    padding: 2px 8px; border-radius: 999px; font-weight: 700;
+  }
+  .name-modal-backdrop {
+    position: fixed; inset: 0; background: rgba(31,22,17,0.6);
+    backdrop-filter: blur(4px); z-index: 100; display: none;
+    align-items: center; justify-content: center; padding: 16px;
+  }
+  .name-modal-backdrop.open { display: flex; }
+  .name-modal {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px; max-width: 380px;
+    width: 100%; box-shadow: var(--shadow-lg);
+  }
+  .name-modal h3 { font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 6px; }
+  .name-modal p { font-size: 0.86rem; color: var(--text-muted); margin-bottom: 14px; }
+  .name-modal input {
+    width: 100%; padding: 10px 14px; border-radius: 10px;
+    border: 1.5px solid var(--border); font-family: inherit;
+    font-size: 0.92rem; margin-bottom: 10px; background: #fff;
+  }
+  .modal-btns { display: flex; flex-direction: column; gap: 8px; }
+  </style>
+  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2027 Oklahoma Native American Cultural & Powwow Guide</title>
@@ -1296,6 +1346,188 @@ savePicks();
 renderEvents();
 renderCalendar();
 renderPacking();
+</script>
+  <!-- Name or Anonymous Heart Modal -->
+<div id="interest-modal" class="name-modal-backdrop" onclick="if(event.target===this) closeInterestModal()">
+  <div class="name-modal">
+    <h3>Show Interest in This Event</h3>
+    <p>Let friends see who wants to carpool—or tap the heart to stay anonymous.</p>
+    <input type="text" id="visitor-name-input" placeholder="First name & last initial (e.g. Sarah M.)" maxlength="24" />
+    <div class="modal-btns">
+      Save Name & Join</button>
+      ❤️ Just Add a Heart (Skip Name)</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  let visitorId = localStorage.getItem("ok_visitor_id");
+  if (!visitorId) {
+    visitorId = "u_" + Math.random().toString(36).slice(2, 10);
+    localStorage.setItem("ok_visitor_id", visitorId);
+  }
+  let visitorMode = localStorage.getItem("ok_visitor_mode") || ""; // "named" | "anon"
+  let visitorName = localStorage.getItem("ok_visitor_name") || "";
+  let interestMap = JSON.parse(localStorage.getItem("ok_interest_cache") || "{}");
+  let pendingEventId = null;
+
+  // 1. Add "Most Popular" pill & "Edit Name" link to filter bar
+  const filterBar = document.querySelector(".filter-bar");
+  if (filterBar) {
+    const popBtn = document.createElement("button");
+    popBtn.className = "pill";
+    popBtn.textContent = "🔥 Most Popular";
+    popBtn.onclick = function() { setFilter("popular", popBtn); };
+    filterBar.insertBefore(popBtn, filterBar.children[1]);
+
+    const editLink = document.createElement("button");
+    editLink.className = "pill";
+    editLink.style.marginLeft = "auto";
+    editLink.textContent = "✏️ My Name";
+    editLink.onclick = function() {
+      pendingEventId = null;
+      document.getElementById("visitor-name-input").value = visitorName;
+      document.getElementById("interest-modal").classList.add("open");
+    };
+    filterBar.appendChild(editLink);
+  }
+
+  function getTotalCount(evId) {
+    const entry = interestMap[evId] || { named: {}, anon: [] };
+    return Object.keys(entry.named || {}).length + (entry.anon || []).length;
+  }
+
+  function isUserJoined(evId) {
+    const entry = interestMap[evId];
+    if (!entry) return false;
+    return Boolean((entry.named && entry.named[visitorId]) || (entry.anon && entry.anon.includes(visitorId)));
+  }
+
+  window.closeInterestModal = function() {
+    document.getElementById("interest-modal").classList.remove("open");
+    pendingEventId = null;
+  };
+
+  window.saveIdentityAndJoin = function(useName) {
+    const raw = document.getElementById("visitor-name-input").value.trim();
+    if (useName && !raw) {
+      showToast("Enter a name or tap Just Add a Heart!");
+      return;
+    }
+    visitorMode = useName ? "named" : "anon";
+    visitorName = useName ? raw : "";
+    localStorage.setItem("ok_visitor_mode", visitorMode);
+    localStorage.setItem("ok_visitor_name", visitorName);
+    const targetId = pendingEventId;
+    closeInterestModal();
+    if (targetId) toggleInterest(targetId, true);
+    else { injectSocialUI(); showToast("Profile updated!"); }
+  };
+
+  window.toggleInterest = async function(evId, forceAdd) {
+    if (!visitorMode) {
+      pendingEventId = evId;
+      document.getElementById("interest-modal").classList.add("open");
+      return;
+    }
+    const currentlyJoined = isUserJoined(evId);
+    const action = (forceAdd || !currentlyJoined) ? "add" : "remove";
+
+    // Optimistic local update
+    if (!interestMap[evId]) interestMap[evId] = { named: {}, anon: [] };
+    delete interestMap[evId].named[visitorId];
+    interestMap[evId].anon = (interestMap[evId].anon || []).filter(id => id !== visitorId);
+    if (action === "add") {
+      if (visitorMode === "named" && visitorName) interestMap[evId].named[visitorId] = visitorName;
+      else interestMap[evId].anon.push(visitorId);
+    }
+    localStorage.setItem("ok_interest_cache", JSON.stringify(interestMap));
+    injectSocialUI();
+
+    // Sync with Netlify Function
+    try {
+      const res = await fetch("/.netlify/functions/interest", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          eventId: evId,
+          userId: visitorId,
+          name: visitorMode === "named" ? visitorName : "",
+          action
+        })
+      });
+      if (res.ok) {
+        interestMap = await res.json();
+        localStorage.setItem("ok_interest_cache", JSON.stringify(interestMap));
+        injectSocialUI();
+      }
+    } catch (e) {}
+  };
+
+  function injectSocialUI() {
+    document.querySelectorAll(".event-card").forEach(card => {
+      const evId = card.id.replace("card-", "");
+      const main = card.querySelector(".card-main");
+      if (!main) return;
+      let row = card.querySelector(".interest-row");
+      if (!row) {
+        row = document.createElement("div");
+        row.className = "interest-row";
+        const drawer = card.querySelector(".card-drawer");
+        main.insertBefore(row, drawer);
+      }
+      const entry = interestMap[evId] || { named: {}, anon: [] };
+      const names = Object.values(entry.named || {});
+      const anonCount = (entry.anon || []).length;
+      const joined = isUserJoined(evId);
+
+      let pillsHtml = "";
+      if (names.length === 0 && anonCount === 0) {
+        pillsHtml = `<span>Be the first to show interest!</span>`;
+      } else {
+        pillsHtml = names.map(n => `<span class="name-pill">${n}</span>`).join("");
+        if (anonCount > 0) pillsHtml += `<span class="heart-pill">❤️ ${anonCount}</span>`;
+      }
+
+      row.innerHTML = `
+        <button class="btn-interest ${joined ? "joined" : ""}" onclick="toggleInterest('${evId}')">
+          ${joined ? "✓ Interested" : "🙋 I'm Interested"}
+        </button>
+        <div class="interest-pills">${pillsHtml}</div>
+      `;
+    });
+  }
+
+  // Hook into existing renderEvents for Most Popular sorting & UI injection
+  const origRenderEvents = window.renderEvents;
+  window.renderEvents = function() {
+    if (window.currentFilter === "popular" || currentFilter === "popular") {
+      const sorted = [...eventsData].sort((a, b) => getTotalCount(b.id) - getTotalCount(a.id));
+      const origOrder = [...eventsData];
+      eventsData.splice(0, eventsData.length, ...sorted);
+      origRenderEvents();
+      eventsData.splice(0, eventsData.length, ...origOrder);
+    } else {
+      origRenderEvents();
+    }
+    injectSocialUI();
+  };
+
+  // Load live counts from Netlify Blobs on startup
+  fetch("/.netlify/functions/interest")
+    .then(r => r.ok ? r.json() : null)
+    .then(serverData => {
+      if (serverData) {
+        interestMap = serverData;
+        localStorage.setItem("ok_interest_cache", JSON.stringify(interestMap));
+        window.renderEvents();
+      }
+    })
+    .catch(() => {});
+
+  window.renderEvents();
+})();
 </script>
 </body>
 </html>
